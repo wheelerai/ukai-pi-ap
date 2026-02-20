@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UKAI | Neural AI Discovery Engine</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #b026ff;
+            --dark-bg: #050508;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5em;
+            font-weight: 900;
+            letter-spacing: 10px;
+            color: #fff;
+            text-shadow: 
+                0 0 10px var(--neon-cyan),
+                0 0 20px var(--neon-cyan),
+                0 0 40px var(--neon-cyan);
+            animation: flicker 3s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+            52% { opacity: 0.5; }
+            54% { opacity: 0.95; }
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-cyan);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .featured-kimi {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(176, 38, 255, 0.1));
+            border: 2px solid var(--neon-pink);
+            border-radius: 30px;
+            padding: 50px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.2);
+        }
+
+        .kimi-logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .kimi-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            background: linear-gradient(135deg, #fff, var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .kimi-description {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3em;
+            color: var(--neon-cyan);
+            margin-bottom: 10px;
+        }
+
+        .feature-text {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .tools-preview {
+            margin: 50px 0;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .tool-card {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05), rgba(176, 38, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.2);
+        }
+
+        .tool-card.kimi {
+            border-color: var(--neon-pink);
+        }
+
+        .tool-card.kimi:hover {
+            box-shadow: 0 10px 40px rgba(255, 0, 255, 0.2);
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 20px;
+        }
+
+        .badge.kimi-badge {
+            background: var(--neon-pink);
+            color: #fff;
+        }
+
+        .badge.new {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .tool-icon.kimi-icon {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+        }
+
+        .tool-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .tool-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+        }
+
+        .tool-category.kimi-cat {
+            background: rgba(255, 0, 255, 0.1);
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+        }
+
+        .tool-description {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .rating {
+            color: #ffa500;
+            font-size: 1.1em;
+        }
+
+        .coming-soon {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .coming-soon h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+        }
+
+        .coming-soon p {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .pi-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            color: #000;
+            padding: 15px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 30px;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+        }
+
+        .footer-text {
+            font-family: 'Orbitron', sans-serif;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 5px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3em; }
+            .kimi-title { font-size: 2em; }
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    
+    <div class="container">
+        <header>
+            <h1>UKAI</h1>
+            <p class="tagline">Neural Discovery Engine</p>
+        </header>
+
+        <div class="featured-kimi">
+            <div class="kimi-logo">🌙</div>
+            <h2 class="kimi-title">KIMI AI</h2>
+            <p class="kimi-description">
+                Moonshot AI's flagship neural network with 2M token context window. 
+                Advanced cognitive processing with multimodal understanding and real-time synthesis.
+            </p>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-title">2M Context</div>
+                    <div class="feature-text">Process entire books in one conversation</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Neural Speed</div>
+                    <div class="feature-text">Real-time response generation</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">Cognitive AI</div>
+                    <div class="feature-text">Advanced reasoning capabilities</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔮</div>
+                    <div class="feature-title">Multimodal</div>
+                    <div class="feature-text">Text, vision, and document analysis</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tools-preview">
+            <h2 class="section-title">Neural Network Directory</h2>
+            <div class="tools-grid">
+                <div class="tool-card kimi">
+                    <span class="badge kimi-badge">Kimi</span>
+                    <div class="tool-icon kimi-icon">KC</div>
+                    <div class="tool-name">Kimi Chat</div>
+                    <span class="tool-category kimi-cat">Conversational AI</span>
+                    <p class="tool-description">Neural conversational AI with 2M token processing and advanced cognitive reasoning.</p>
+                    <div class="rating">★★★★★ 4.9</div>
+                </div>
+
+                <div class="tool-card kimi">
+                    <span class="badge kimi-badge">Kimi</span>
+                    <div class="tool-icon kimi-icon">KA</div>
+                    <div class="tool-name">Kimi API</div>
+                    <span class="tool-category kimi-cat">Developer Tools</span>
+                    <p class="tool-description">Direct neural interface for developers. Integrate Kimi's cognitive engine.</p>
+                    <div class="rating">★★★★★ 4.8</div>
+                </div>
+
+                <div class="tool-card">
+                    <span class="badge new">New</span>
+                    <div class="tool-icon">CG</div>
+                    <div class="tool-name">ChatGPT</div>
+                    <span class="tool-category">Text AI</span>
+                    <p class="tool-description">OpenAI's conversational neural network for general purpose text synthesis.</p>
+                    <div class="rating">★★★★☆ 4.8</div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">MJ</div>
+                    <div class="tool-name">Midjourney</div>
+                    <span class="tool-category">Image AI</span>
+                    <p class="tool-description">Visual synthesis engine for photorealistic and artistic imagery generation.</p>
+                    <div class="rating">★★★★★ 4.9</div>
+                </div>
+
+                <div class="tool-card">
+                    <span class="badge new">New</span>
+                    <div class="tool-icon">SD</div>
+                    <div class="tool-name">Stable Diffusion 3</div>
+                    <span class="tool-category">Image AI</span>
+                    <p class="tool-description">Open-source visual neural network with high-fidelity image generation.</p>
+                    <div class="rating">★★★★☆ 4.6</div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">CP</div>
+                    <div class="tool-name">GitHub Copilot</div>
+                    <span class="tool-category">Code AI</span>
+                    <p class="tool-description">Neural code completion with real-time AI pair programming.</p>
+                    <div class="rating">★★★★☆ 4.6</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="coming-soon">
+            <h2>🚧 Full Platform Launching Soon</h2>
+            <p>Search • Filter • Review • Submit AI Tools</p>
+            <p>Community-driven neural network discovery powered by Pi Network</p>
+            <div class="pi-badge">🥧 PI NETWORK EXCLUSIVE</div>
+        </div>
+
+        <footer>
+            <p class="footer-text">UKAI.pi | Featuring Kimi AI | 2025</p>
+        </footer>
+    </div>
+</body>
+</html>
